@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网页翻译</title>
+  <style>
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      width: 320px;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #4285f4;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .function-buttons {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      background-color: #fff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 4px;
+      background-color: #f1f1f1;
+      color: #333;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .btn.active {
+      background-color: #4285f4;
+      color: white;
+    }
+    
+    .result-area {
+      padding: 15px;
+      min-height: 150px;
+      max-height: 300px;
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    #loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    .spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #4285f4;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .message {
+      color: #999;
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    footer {
+      padding: 10px;
+      text-align: center;
+      background-color: #f1f1f1;
+      color: #666;
+      font-size: 12px;
+      border-top: 1px solid #e0e0e0;
+    }
+    
+    .open-sidepanel {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .open-sidepanel:hover {
+      background-color: #3367d6;
+    }
+    
+    .language-select {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .language-select select {
+      padding: 5px;
+      margin-left: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .language-select label {
+      font-size: 14px;
+      margin-right: 5px;
+    }
+    
+    .action-button {
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .action-btn {
+      padding: 8px 16px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      width: 80%;
+    }
+    
+    .action-btn:hover {
+      background-color: #3367d6;
+    }
+    
+    #translation-options {
+      display: block;
+    }
+    
+    #summary-options {
+      display: none;
+    }
+    
+    .text-input-area {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .text-input-area textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+    }
+    
+    .text-input-area .input-help {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .tabs {
+      display: flex;
+      background-color: #f9f9f9;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .tab.active {
+      border-bottom: 2px solid #4285f4;
+      color: #4285f4;
+      font-weight: bold;
+    }
+    
+    .api-info {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #666;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .api-info pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+    
+    .toggle-api-info {
+      display: block;
+      margin: 10px auto;
+      padding: 5px 10px;
+      background-color: #f1f1f1;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #666;
+      cursor: pointer;
+    }
+    
+    .toggle-api-info:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .page-info {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #e8f4fe;
+      border: 1px solid #bbd8f4;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #333;
+    }
+    
+    .page-info pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    网页翻译 - Kimi翻译
+  </header>
+  
+  <div class="function-buttons">
+    <button id="translate-btn" class="btn active">翻译内容</button>
+    <button id="summarize-btn" class="btn">总结内容</button>
+    <button id="history-btn" class="btn">历史记录</button>
+  </div>
+  
+  <div class="tabs">
+    <div id="select-tab" class="tab active">选择文本</div>
+    <div id="input-tab" class="tab">输入文本</div>
+  </div>
+  
+  <div id="text-input-container" class="text-input-area hidden">
+    <textarea id="input-text" placeholder="请在此输入或粘贴要处理的文本..."></textarea>
+    <div class="input-help">提示：直接输入或粘贴文本，然后点击下方按钮处理</div>
+  </div>
+  
+  <div id="translation-options" class="language-select">
+    <label for="target-language">翻译为：</label>
+    <select id="target-language">
+      <option value="zh">中文</option>
+      <option value="en">英语</option>
+      <option value="ja">日语</option>
+    </select>
+  </div>
+  
+  <div id="summary-options" class="language-select">
+    <div>
+      <label for="summary-language">总结语言：</label>
+      <select id="summary-language">
+        <option value="zh">中文</option>
+        <option value="en">英语</option>
+        <option value="ja">日语</option>
+      </select>
+    </div>
+    <div style="margin-top: 8px;">
+      <label for="summary-length">总结长度：</label>
+      <select id="summary-length">
+        <option value="short">简短总结</option>
+        <option value="medium" selected>中等长度</option>
+        <option value="long">详细总结</option>
+      </select>
+    </div>
+    <div id="summarize-page-container" style="margin-top: 10px; text-align: center;">
+      <button id="summarize-page-btn" class="btn" style="background-color: #4285f4; color: white;">总结整个网页</button>
+    </div>
+  </div>
+  
+  <div class="result-area">
+    <div id="loading" class="hidden">
+      <div class="spinner"></div>
+      <p>处理中...</p>
+    </div>
+    <div id="result-container">
+      <p class="message">请选择或输入要处理的文本，然后点击下方按钮</p>
+      <div class="action-button">
+        <button id="process-btn" class="action-btn">翻译文本</button>
+      </div>
+      <div class="text-length-info" style="font-size: 12px; color: #666; text-align: center; margin-top: 5px;">
+        支持处理最多20,000字符的文本
+      </div>
+      <div class="action-button" style="margin-top: 25px;">
+        <button id="open-sidepanel" class="open-sidepanel">在侧边栏中打开</button>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    由Kimi API提供支持
+  </footer>
+  
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html> 

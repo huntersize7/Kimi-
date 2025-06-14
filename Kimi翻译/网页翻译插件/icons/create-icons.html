@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>创建Kimi图标</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin: 10px;
+    }
+    .icons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .icon-item {
+      text-align: center;
+      margin: 10px;
+    }
+    .actions {
+      margin: 20px 0;
+      text-align: center;
+    }
+    button {
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
+    .download-links {
+      margin-top: 20px;
+    }
+    a {
+      display: inline-block;
+      margin: 10px;
+      padding: 8px 16px;
+      background-color: #f1f1f1;
+      color: #333;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    a:hover {
+      background-color: #ddd;
+    }
+    .instructions {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>创建Kimi图标</h1>
+  
+  <div class="instructions">
+    <h3>使用说明:</h3>
+    <ol>
+      <li>点击"加载图标"按钮将会加载Kimi原始图标</li>
+      <li>图标将自动调整为不同尺寸</li>
+      <li>点击"生成并下载"按钮可以下载所有尺寸的图标</li>
+      <li>将下载的图标放到icons目录下</li>
+    </ol>
+  </div>
+  
+  <div class="actions">
+    <button id="loadImageBtn">加载图标</button>
+    <button id="generateBtn">生成并下载</button>
+  </div>
+  
+  <div class="icons-container">
+    <div class="icon-item">
+      <canvas id="canvas16" width="16" height="16"></canvas>
+      <div>16×16</div>
+    </div>
+    <div class="icon-item">
+      <canvas id="canvas32" width="32" height="32"></canvas>
+      <div>32×32</div>
+    </div>
+    <div class="icon-item">
+      <canvas id="canvas48" width="48" height="48"></canvas>
+      <div>48×48</div>
+    </div>
+    <div class="icon-item">
+      <canvas id="canvas128" width="128" height="128"></canvas>
+      <div>128×128</div>
+    </div>
+  </div>
+  
+  <div id="downloadContainer" class="download-links"></div>
+  
+  <script>
+    // 获取所有画布元素
+    const canvas16 = document.getElementById('canvas16');
+    const canvas32 = document.getElementById('canvas32');
+    const canvas48 = document.getElementById('canvas48');
+    const canvas128 = document.getElementById('canvas128');
+    
+    // 获取上下文
+    const ctx16 = canvas16.getContext('2d');
+    const ctx32 = canvas32.getContext('2d');
+    const ctx48 = canvas48.getContext('2d');
+    const ctx128 = canvas128.getContext('2d');
+    
+    // 加载图标按钮点击事件
+    document.getElementById('loadImageBtn').addEventListener('click', function() {
+      const img = new Image();
+      img.onload = function() {
+        // 在各个画布上绘制图像
+        ctx16.drawImage(img, 0, 0, 16, 16);
+        ctx32.drawImage(img, 0, 0, 32, 32);
+        ctx48.drawImage(img, 0, 0, 48, 48);
+        ctx128.drawImage(img, 0, 0, 128, 128);
+      };
+      img.src = 'kimi-original.png'; // 使用已经复制到icons目录的图片
+    });
+    
+    // 生成并下载按钮点击事件
+    document.getElementById('generateBtn').addEventListener('click', function() {
+      const downloadContainer = document.getElementById('downloadContainer');
+      downloadContainer.innerHTML = '';
+      
+      // 创建下载链接
+      createDownloadLink(canvas16, 'icon-16.png', downloadContainer);
+      createDownloadLink(canvas32, 'icon-32.png', downloadContainer);
+      createDownloadLink(canvas48, 'icon-48.png', downloadContainer);
+      createDownloadLink(canvas128, 'icon-128.png', downloadContainer);
+    });
+    
+    // 创建下载链接函数
+    function createDownloadLink(canvas, filename, container) {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = filename;
+      link.textContent = `下载 ${filename}`;
+      container.appendChild(link);
+    }
+  </script>
+</body>
+</html> 

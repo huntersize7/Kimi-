@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网页翻译插件图标生成器</title>
+  <style>
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 30px;
+      color: #4285f4;
+    }
+    .icons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .icon-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .icon {
+      background-color: #4285f4;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .icon-16 {
+      width: 16px;
+      height: 16px;
+      padding: 4px;
+    }
+    .icon-32 {
+      width: 32px;
+      height: 32px;
+      padding: 6px;
+    }
+    .icon-48 {
+      width: 48px;
+      height: 48px;
+      padding: 8px;
+    }
+    .icon-128 {
+      width: 128px;
+      height: 128px;
+      padding: 16px;
+    }
+    p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .instructions {
+      max-width: 600px;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    ol {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>网页翻译插件图标</h1>
+  
+  <div class="icons-container">
+    <div class="icon-box">
+      <div class="icon icon-16">
+        <svg viewBox="0 0 24 24" fill="white" width="100%" height="100%">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+      </div>
+      <p>16×16像素</p>
+    </div>
+    
+    <div class="icon-box">
+      <div class="icon icon-32">
+        <svg viewBox="0 0 24 24" fill="white" width="100%" height="100%">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+      </div>
+      <p>32×32像素</p>
+    </div>
+    
+    <div class="icon-box">
+      <div class="icon icon-48">
+        <svg viewBox="0 0 24 24" fill="white" width="100%" height="100%">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+      </div>
+      <p>48×48像素</p>
+    </div>
+    
+    <div class="icon-box">
+      <div class="icon icon-128">
+        <svg viewBox="0 0 24 24" fill="white" width="100%" height="100%">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+      </div>
+      <p>128×128像素</p>
+    </div>
+  </div>
+  
+  <div class="instructions">
+    <h2>使用说明：</h2>
+    <ol>
+      <li>使用浏览器打开此HTML文件</li>
+      <li>对每个图标使用浏览器的截图功能或右键"另存为图片"</li>
+      <li>将保存的图片文件分别命名为：icon-16.png、icon-32.png、icon-48.png和icon-128.png</li>
+      <li>将这些图片文件放入插件的images目录中</li>
+    </ol>
+    <p>提示：如果使用截图工具，请确保裁剪时只包含图标部分，并保持正方形比例</p>
+  </div>
+
+</body>
+</html> 
